@@ -19,8 +19,8 @@
             "sub_fields": [
                 {
                     "key": "field_5c5431b72d82e",
-                    "label": "Alt Title",
-                    "name": "alt_title",
+                    "label": "Title",
+                    "name": "title",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -30,6 +30,27 @@
                         "class": "",
                         "id": ""
                     },
+                    "hide_admin": 0,
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_63f3a3d5e743f",
+                    "label": "Description",
+                    "name": "description",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "hide_admin": 0,
                     "default_value": "",
                     "placeholder": "",
                     "prepend": "",
@@ -86,60 +107,6 @@
             "layout": "block",
             "sub_fields": [
                 {
-                    "key": "field_5c928409b32d0",
-                    "label": "Email",
-                    "name": "email",
-                    "type": "group",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "layout": "table",
-                    "sub_fields": [
-                        {
-                            "key": "field_5c92840eb32d1",
-                            "label": "Text",
-                            "name": "text",
-                            "type": "text",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "maxlength": ""
-                        },
-                        {
-                            "key": "field_5c928415b32d2",
-                            "label": "Address",
-                            "name": "address",
-                            "type": "email",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": ""
-                        }
-                    ]
-                },
-                {
                     "key": "field_5c92846ec3690",
                     "label": "Social",
                     "name": "social",
@@ -154,6 +121,26 @@
                     },
                     "layout": "block",
                     "sub_fields": [
+                        {
+                            "key": "field_63f3a94c9ab2c",
+                            "label": "Title",
+                            "name": "title",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "hide_admin": 0,
+                            "default_value": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "maxlength": ""
+                        },
                         {
                             "key": "field_5c5432082d82f",
                             "label": "Social",
@@ -195,7 +182,7 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": true,
+    "active": 1,
     "description": "",
-    "modified": 1592923901
+    "modified": 1676913384
 }

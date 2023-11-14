@@ -2,10 +2,10 @@
   'use strict'
 
   // Bind Event Handlers
-  $(document).on('click', '[data-clip]', handleDataClip)
-  $(document).on('click', '[data-toggle]', handleDataToggle)
-  $(document).on('click', '.tab-filters [data-clip]', handleResourcesFilters)
-  $(document).on('click', '[data-clip*="event-months"]', handleMonthlyFilters)
+  // $(document).on('click', '[data-clip]', handleDataClip)
+  // $(document).on('click', '[data-toggle]', handleDataToggle)
+  // $(document).on('click', '.tab-filters [data-clip]', handleResourcesFilters)
+  // $(document).on('click', '[data-clip*="event-months"]', handleMonthlyFilters)
 
   var screenRes_ = {
     isDesktop: true,
@@ -14,19 +14,18 @@
   }
 
   $(document).ready(function () {
-    checkScreenSize()
-    imgToBg()
-    initHeader()
+    // checkScreenSize()
+    // imgToBg()
+    // initHeader()
     initDefaultSlider()
-    initFundInfo()
-    initPartnersCarousel()
+    // initFundInfo()
     // initStatistics()
-    initMemberList()
+    // initMemberList()
   })
 
-  $(window).on('resize', function () {
-    checkScreenSize()
-  })
+  // $(window).on('resize', function () {
+  //   checkScreenSize()
+  // })
 
   function checkScreenSize () {
     var winWidth = $(window).outerWidth()
@@ -67,29 +66,45 @@
   }
 
   function initDefaultSlider () {
-    $('.intro-slider, .post-slider').slick({
-      arrows: true,
-      dots: true,
-      fade: true,
-      autoplay: true,
-      autoplaySpeed: 4000,
-    })
-    $('[data-slider="featured-posts"]').slick({
-      arrows: true,
-      dots: true,
-      fade: true,
-      autoplay: true,
-      autoplaySpeed: 4000,
-      prevArrow: '[data-slider="featured-posts"] button.slick-prev',
-      nextArrow: '[data-slider="featured-posts"] button.slick-next',
-      responsive: [
-        {
-          breakpoint: 768,
-          settings: {
-            arrows: false,
+    var config = {
+      default: {
+        spaceBetween: 16,
+        autoHeight: true,
+      },
+      featured: {
+        loop: true,
+        effect: 'fade',
+        fadeEffect: { crossFade: true },
+      },
+      visual: {
+        slidesPerView: 1,
+        effect: window.matchMedia('(min-width: 1024px)').matches ? 'slide ': 'fade',
+        fadeEffect: { crossFade: true },
+        breakpoints: {
+          1024: {
+            slidesPerView: 2,
+            spaceBetween: 0,
+            pagination: false,
           },
         },
-      ],
+      },
+    }
+
+    document.querySelectorAll('.swiper').forEach((slider) => {
+      var swiper = new Swiper(slider, {
+        loop: false,
+        keyboard: true,
+        slideToClickedSlide: true,
+        navigation: {
+          nextEl: slider.querySelector('.swiper-button-next'),
+          prevEl: slider.querySelector('.swiper-button-prev'),
+        },
+        pagination: {
+          el: slider.querySelector('.swiper-pagination'),
+          clickable: true,
+        },
+        ...config[slider.dataset.swiper],
+      })
     })
   }
 
@@ -104,12 +119,6 @@
     $('.fund-info img').each(function () {
       var $img = $(this)
       setImageSize($img)
-    })
-  }
-
-  function initPartnersCarousel () {
-    $('.partners-carousel').slick({
-      variableWidth: true,
     })
   }
 
@@ -174,27 +183,6 @@
 
     $('.member-list').find('a, button').on('click', handleOpener)
   }
-
-  // BeefUp
-  $('.beefup').beefup({
-    openSingle: true,
-    onInit: function (element) {
-      if (location.hash && location.hash.slice(1) === element.parent().attr('id')) {
-        element.find('.beefup__head').each(function (index, item) {
-          function handler () {
-            var filters = jQuery('.tab-filters button')
-            var parentId = element.parent().parent().attr('id')
-            var targetTab = filters.filter(':not([data-clip*="' + parentId + '"])')
-
-            targetTab.click()
-            item.click()
-          }
-
-          setTimeout(handler, 500)
-        })
-      }
-    },
-  })
 })(jQuery)
 
 /**

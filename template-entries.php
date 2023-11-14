@@ -2,39 +2,43 @@
 
 /* Template Name: Form Entries */
 
-$_title = get_the_title();
-$_description = get_field( 'description' );
-$_range = get_field( 'range' );
+if ( false ) :
+	query_posts( array(
+		'facetwp'          => true,
+		'suppress_filters' => true,
+		'post_type'      => 'af_entry',
+		// 'posts_per_page' => '-1',
+		'order'          => 'ASC',
+		// 'orderby'        => 'rand',
+		'date_query'     => array(
+			array(
+				'after'     => get_field( 'range' )['from'],
+				'before'    => get_field( 'range' )['to'],
+				'inclusive' => true,
+			),
+		),
+	) );
 
-$posts_key  = 0;
+	require 'archive.php';
+
+
+else :
+
 $has_banner = get_field( 'has_banner' );
-
-$i_classes = array(
-	'li' => array(
-		'talent'  => 'flex w-full md:w-1/2 xl:w-1/3',
-		'default' => function ( $key ) {
-			return array(
-				$key,
-				'flex w-full md:w-1/2 lg:w-1/3 xl:w-1/4',
-				$key < 2 ? 'order-first' : 'order-last',
-				$key < 4 ? 'md:order-first' : 'md:order-last',
-				$key < 6 ? 'lg:order-first' : 'lg:order-last',
-				$key < 8 ? 'xl:order-first' : 'xl:order-last',
-			);
-		},
-	),
-);
+$banner = get_field( 'banner' );
 
 $entries = new WP_Query(
 	array(
+		'facetwp'          => true,
+		'suppress_filters' => true,
 		'post_type'      => 'af_entry',
-		'posts_per_page' => '-1',
+		// 'posts_per_page' => '-1',
 		'order'          => 'ASC',
-		'orderby'        => 'rand',
+		// 'orderby'        => 'rand',
 		'date_query'     => array(
 			array(
-				'after'     => $_range['from'],
-				'before'    => $_range['to'],
+				'after'     => get_field( 'range' )['from'],
+				'before'    => get_field( 'range' )['to'],
 				'inclusive' => true,
 			),
 	),
@@ -47,51 +51,63 @@ $entries = new WP_Query(
 <?php get_header(); ?>
 
 
-<main class="flex flex-col flex-grow">
+<main class="container flex-grow">
+	<article class="grid gap-12 px-8 py-12">
 
-	<?php set_query_var( 'title', $_title ); ?>
-	<?php set_query_var( 'description', $_description ); ?>
-	<?php get_template_part( 'template-parts/blocks/header' ); ?>
-	<?php get_template_part( 'template-parts/archive/aside-af_entry' ); ?>
+		<?php set_query_var( 'title', get_the_title() ); ?>
+		<?php set_query_var( 'subtitle', get_field( 'description' ) ); ?>
+		<?php get_template_part( 'template-parts/page/header' ); ?>
+
+		<?php if ( $has_banner ) : ?>
+			<aside class="relative grid-layout md:grid-cols-2 items-center px-0 py-12 lg:py-16 text-white bg-indigo rounded-3xl">
+				<div aria-hidden="true" class="-z-10 absolute inset-y-0 bg-[inherit] w-[50vw] left-[50%]"></div>
+				<div aria-hidden="true" class="-z-10 absolute inset-y-0 bg-[inherit] w-[50vw] right-[50%]"></div>
+
+				<div class="flex flex-col gap-4 lg:gap-6 max-w-[40em]">
+					<div class="text-3xl"><p><?php echo $banner['title']; ?></p></div>
+					<div class="text-2xl"><?php echo $banner['description']; ?></div>
+					<div class="mt-2"><a
+						class="ddp-button"
+						href="<?php echo esc_attr( $banner['link']['url'] ); ?>"
+						target="<?php echo esc_attr( $banner['link']['target'] ); ?>"
+					><?php echo esc_attr( $banner['link']['title'] ); ?></a></div>
+				</div>
+
+				<div class="order-first md:order-last">
+					<?php echo wp_get_attachment_image( $banner['image']['ID'], 'post-thumbnail', false, array( 'class' => 'w-auto max-h-[24rem] m-auto' ) ); ?>
+				</div>
+
+			</aside>
+		<?php endif ?>
+
+		<nav class="grid-layout grid-cols-10 gap-8 text-center">
+			<div class="flex flex-col gap-8 col-span-full lg:col-start-2 lg:col-span-8">
+				<p class="text-xl lg:text-3xl font-light">Filter and customize your search</p>
+				<?php echo wp_kses_post( do_shortcode( '[facetwp facet="archive_af_entry"]' ) ); ?>
+			</div>
+		</nav>
+
+		<section class="">
+			<ul class="grid-layout md:grid-cols-2 lg:grid-cols-3">
+
+				<?php while ( $entries->have_posts() ) : ?>
+					<?php $entries->the_post(); ?>
+					<li class="<?php the_classes( '' ); ?>">
+						<?php get_template_part( 'template-parts/base/card-af_entry' ); ?>
+					</li>
+				<?php endwhile ?>
+
+			</ul>
+		</section>
 
 
-	<section class="flex flex-grow w-full overflow-x-hidden">
-		<ul class="list-reset flex flex-1 flex-wrap -mt-px -mx-px">
+		<?php get_template_part( 'template-parts/archive/navigation' ); ?>
+		<?php /* get_template_part( 'template-parts/forms/index' ); */ ?>
 
-			<?php if ( $has_banner ) : ?>
-				<li class="<?php the_classes( 'flex w-full order-none' ); ?>">
-					<div id="post-<?php the_ID(); ?>" class="
-						z-0 relative w-full md:h-0 border-px border-solid overflow-hidden
-						md:aspect-ratio-2/1 lg:aspect-ratio-3/1 xl:aspect-ratio-4/1
-					">
-						<span class="z-10 md:absolute pin flex flex-col-reverse md:flex-row w-full h-full p-20">
-							<?php echo wp_get_attachment_image( $thumbnail_id, 'post-thumbnail', false ); ?>
-							<div class="w-full flex flex-col flex-1 justify-center">
-								<div class="font-oswald uppercase"><p><?php echo get_field( 'banner' )['title']; ?></p></div>
-								<div class="mt-10"><?php echo get_field( 'banner' )['description']; ?></div>
-								<div class="mt-20 text-14 lg:text-18"><a
-									href="<?php echo esc_attr( get_field( 'banner' )['link']['url'] ); ?>"
-									target="<?php echo esc_attr( get_field( 'banner' )['link']['target'] ); ?>"
-									class="inline-flex justify-center w-auto lg:w-full max-w-screen-xs items-center py-10 px-20 bg-white hocus:text-black hocus:bg-primary text-center no-underline border rounded-full overflow-hidden"
-								><?php echo esc_attr( get_field( 'banner' )['link']['title'] ); ?></a></div>
-							</div>
-							<div class="w-full flex flex-col flex-1 justify-center">
-								<?php echo wp_get_attachment_image( get_field( 'banner' )['image']['ID'], 'post-thumbnail', false, array( 'class' => 'w-full h-full object-contain' ) ); ?>
-							</div>
-						</span>
-					</div>
-				</li>
-			<?php endif ?>
 
-			<?php while ( $entries->have_posts() ) : ?>
-				<?php $entries->the_post(); ?>
-				<li class="<?php the_classes( $i_classes['li']['default']( $posts_key++ ) ); ?>">
-					<?php get_template_part( 'template-parts/post/content', get_post_type() ); ?>
-				</li>
-			<?php endwhile ?>
-		</ul>
-	</section>
-
+	</article>
 </main>
 
 <?php get_footer(); ?>
+
+<?php endif; ?>

@@ -8,8 +8,8 @@ var pot = require('./assets/build/tasks/pot.js')
 /**
  * Tasks
  */
-var build = gulp.series(styles.default, styles.stylesSass, icons.default, pot.default)
-var watch = gulp.parallel(styles.watch, styles.watchStylesSass, icons.watch, pot.watch)
+var build = gulp.series(styles.default, icons.default, pot.default)
+var watch = gulp.parallel(styles.watch, icons.watch, pot.watch)
 
 gulp.task('build', build)
 gulp.task('build:styles', styles.default)

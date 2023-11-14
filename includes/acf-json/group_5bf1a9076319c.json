@@ -54,13 +54,14 @@
             "name": "name",
             "type": "text",
             "instructions": "",
-            "required": 0,
+            "required": 1,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "50",
                 "class": "",
                 "id": ""
             },
+            "hide_admin": 0,
             "default_value": "",
             "placeholder": "",
             "prepend": "",
@@ -255,7 +256,7 @@
     "label_placement": "left",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": true,
+    "active": 1,
     "description": "",
-    "modified": 1592923900
+    "modified": 1678968992
 }

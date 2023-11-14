@@ -34,7 +34,7 @@
             "label": "Subtitle",
             "name": "subtitle",
             "type": "wysiwyg",
-            "instructions": "Only used on Posts and Talent.",
+            "instructions": "Shown in posts sliders above the title. Leave empty to use the default one for each post type.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -42,6 +42,7 @@
                 "class": "",
                 "id": ""
             },
+            "hide_admin": 0,
             "default_value": "",
             "tabs": "all",
             "toolbar": "basic",
@@ -49,10 +50,10 @@
             "delay": 0
         },
         {
-            "key": "field_5ca1056c5a9a3",
-            "label": "Left Column",
-            "name": "left_column",
-            "type": "group",
+            "key": "field_644baea246972",
+            "label": "Author",
+            "name": "author",
+            "type": "text",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -61,66 +62,32 @@
                 "class": "",
                 "id": ""
             },
-            "layout": "table",
-            "sub_fields": [
-                {
-                    "key": "field_5ca105745a9a4",
-                    "label": "Heading",
-                    "name": "heading",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "maxlength": ""
-                },
-                {
-                    "key": "field_5ca10592b984a",
-                    "label": "Subheading",
-                    "name": "subheading",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "maxlength": ""
-                },
-                {
-                    "key": "field_5ca10598b984b",
-                    "label": "Bottom",
-                    "name": "bottom",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "maxlength": ""
-                }
-            ]
+            "hide_admin": 0,
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_644baea846973",
+            "label": "Institution",
+            "name": "institution",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "hide_admin": 0,
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
         }
     ],
     "location": [
@@ -161,6 +128,13 @@
                 "operator": "==",
                 "value": "tribe_events"
             }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "resources"
+            }
         ]
     ],
     "menu_order": 0,
@@ -171,5 +145,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1619627230
+    "modified": 1682694221
 }

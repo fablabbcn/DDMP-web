@@ -26,10 +26,9 @@ if ( ! function_exists( 'ddmp_shortcode_button_link' ) ) {
 		$is_external     = $parsed_site_url !== $parsed_code_url;
 
 		$classes = array(
+			'ddp-button',
 			array_key_exists( 'class', $attrs ) ? $attrs['class'] : false,
-			'flex justify-center items-center',
-			array_key_exists( 'icon', $attrs ) && $attrs['icon'] ? 'w-45 h-45 md:w-50 md:h-50 p-10' : 'w-full py-10 px-20',
-			'bg-white hocus:text-black hocus:bg-primary text-center no-underline border rounded-full overflow-hidden',
+			array_key_exists( 'icon', $attrs ) && $attrs['icon'] ? 'w-10 h-10 p-2' : '',
 		);
 
 		$link_attrs = array(
@@ -39,9 +38,9 @@ if ( ! function_exists( 'ddmp_shortcode_button_link' ) ) {
 		);
 
 		return ( array_key_exists( 'icon', $attrs ) && $attrs['icon'] ) || $content ? (
-			"<p><a {$link_attrs['class']} {$link_attrs['href']} {$link_attrs['target']}>" .
+			"<p class='flex'><a {$link_attrs['class']} {$link_attrs['href']} {$link_attrs['target']}>" .
 				( array_key_exists( 'icon', $attrs ) && $attrs['icon']
-					? ( '<svg class="fill-current"><use xlink:href="#social-' . $attrs['icon'] . '" /></svg>' )
+					? ( '<svg class="w-full h-full fill-current"><use xlink:href="#social-' . $attrs['icon'] . '" /></svg>' )
 					: ( '<span>' . $content ?: $attrs['label'] . '</span>' )
 				) .
 			'</a></p>'
@@ -56,7 +55,8 @@ if ( ! function_exists( 'ddmp_shortcode_modal' ) ) {
 		$post_id  = array_key_exists( 'id', $attrs ) ? $attrs['id'] : ( $content ?: false );
 		$form_id  = array_key_exists( 'form', $attrs ) ? $attrs['form'] : false;
 		$modal_id = $form_id ? "modal-form-$post_id" : "modal-resources-$post_id";
-		$classes  = 'flex justify-center items-center w-full py-10 px-20 bg-white hocus:text-black hocus:bg-primary text-center no-underline border rounded-full overflow-hidden';
+		$data     = "{ postId: '$post_id', formId: '$form_id' }";
+		$classes  = 'ddp-button bg-white';
 
 		$this_form = $form_id;
 		$this_post = $post_id;
@@ -67,7 +67,7 @@ if ( ! function_exists( 'ddmp_shortcode_modal' ) ) {
 
 		require_once $partial_location;
 
-		return "<p><button data-toggle=\"$modal_id\" class=\"$classes\">$content</button></p>";
+		return "<p><button x-data=\"$data\" @click=\"openModal = formId || postId\" class=\"$classes\">$content</button></p>";
 	} add_shortcode( 'modal_toggle', 'ddmp_shortcode_modal' );
 }
 

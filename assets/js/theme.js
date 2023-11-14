@@ -1,4 +1,4 @@
-/* global wpHelper */
+/* global wpHelper, Alpine */
 (function ($) {
   'use strict'
 
@@ -13,16 +13,20 @@
         callback: function (response) {
           var success = response.result === 'success'
           var subscribed = response.msg.includes('already subscribed')
-          var status = success ? 'success' : subscribed ? 'subscribed' : 'error'
+          var status = subscribed ? 'subscribed' : success ? 'success' : 'error'
 
           var messages = {
             success: 'Thank you, now check your email',
-            subscribed: 'Already subscribed',
+            subscribed: response.msg || 'Already subscribed',
             error: response.msg || 'Something went wrong. Please, try again',
           }
 
           form.setAttribute('data-ajaxchimp', status)
           form.setAttribute('data-content', messages[status])
+
+          if (success) {
+            Alpine.$data(form).isOpen = true
+          }
         },
       })
     })

@@ -1,4 +1,4 @@
-# Copyright (C) 2021 ddmp
+# Copyright (C) 2023 ddmp
 # This file is distributed under the same license as the ddmp package.
 msgid ""
 msgstr ""
@@ -26,15 +26,7 @@ msgid "Oops! That page can&rsquo;t be found."
 msgstr ""
 
 #: header.php:37
-msgid "DDMP"
-msgstr ""
-
-#: header.php:39
-msgid "Distributed Design"
-msgstr ""
-
-#: header.php:40
-msgid "Market Platform"
+msgid "DDP"
 msgstr ""
 
 #: single-event.php:3

@@ -43,7 +43,7 @@
                         "youtube": "YouTube",
                         "email": "Email"
                     },
-                    "default_value": [],
+                    "default_value": false,
                     "allow_null": 0,
                     "multiple": 0,
                     "ui": 0,
@@ -87,5 +87,5 @@
     "hide_on_screen": "",
     "active": false,
     "description": "",
-    "modified": 1592923890
+    "modified": 1676910351
 }

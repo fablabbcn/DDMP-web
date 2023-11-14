@@ -7,40 +7,31 @@ $details = array(
 	'time_end'   => tribe_get_end_date( null, false, 'g:ia' ),
 );
 
-$blocks = array(
-	'Details' => array(
-		array( 'Date', $details['date_start'] !== $details['date_end'] ? "{$details['date_start']} — {$details['date_end']}" : $details['date_start'] ),
-		array( 'Time', $details['time_start'] !== $details['time_end'] ? "{$details['time_start']} — {$details['time_end']}" : $details['time_start'] ),
-		array( '<a class="no-underline" href="//' . tribe_get_event_website_url() . '" target="_blank">Website &rarr;</a>' ),
-	),
-	'Venue'   => array(
-		array( tribe_get_venue(), tribe_get_full_address(), tribe_get_map_link_html() ),
-		array( '<a class="no-underline" href="//' . tribe_get_venue_website_url() . '" target="_blank">Website &rarr;</a>' ),
+$date = $details['date_start'] !== $details['date_end'] ? "{$details['date_start']} — {$details['date_end']}" : $details['date_start'];
+$time = $details['time_start'] !== $details['time_end'] ? "{$details['time_start']} — {$details['time_end']}" : $details['time_start'];
+$venue = tribe_get_venue() ? tribe_get_venue_website_url() ? array( array( 'label' => tribe_get_venue(), 'href' => tribe_get_venue_website_url() ) ) : tribe_get_venue() : null;
+$location = tribe_get_full_address() ? tribe_get_map_link() ? array( array( 'label' => tribe_get_full_address(), 'href' => tribe_get_map_link() ) ) : tribe_get_full_address() : null;
+$price = tribe_get_formatted_cost() ? tribe_get_event_website_url() ? array( array( 'label' => tribe_get_formatted_cost(), 'href' => tribe_get_event_website_url() ) ) : tribe_get_formatted_cost() : null;
+
+
+$definitions = array(
+	'items' => array(
+		array( 'terms' => array('Date'), 'definitions' => array( $date ?: '—' ) ),
+		array( 'terms' => array('Opening hours'), 'definitions' => array( $time ?: '—' ) ),
+		array( 'terms' => array('Venue'), 'definitions' => array( $venue ?: '—' ) ),
+		array( 'terms' => array('Location'), 'definitions' => array( $location ?: '—' ) ),
+		array( 'terms' => array('Price'), 'definitions' => array( $price ?: 'Free' ) ),
 	),
 );
 
-
 ?>
 
-<?php foreach ( $blocks as $key => $block ) : ?>
-	<?php $not_first = array_keys( $blocks )[0] !== $key; ?>
 
-	<header class="<?php the_classes( $not_first ? array( 'mt-30 md:mt-60' ) : array() ); ?>">
-		<?php set_query_var( 'details', array( 'heading' => $key ) ); ?>
-		<?php get_template_part( 'template-parts/singular/details' ); ?>
-	</header>
+<div class="grid-layout grid-cols-1 col-span-full lg:col-start-2 lg:col-end-3">
+	<h2 class="!text-xl !font-light">Useful information</h2>
+</div>
 
-	<dl>
-		<?php foreach ( $block as $key => $items ) : ?>
-			<?php foreach ( $items as $key => $item ) : ?>
-				<?php if ( 0 === $key ) : ?>
-					<dt><?php echo wp_kses_post( $item ); ?></dt>
-				<?php else : ?>
-					<dd><?php echo wp_kses_post( $item ); ?></dd>
-				<?php endif; ?>
-			<?php endforeach; ?>
-		<?php endforeach; ?>
-	</dl>
-
-
-<?php endforeach; ?>
+<div class="grid-layout grid-cols-1 col-span-full lg:col-start-3 lg:col-end-7">
+	<?php set_query_var( 'list', $definitions ); ?>
+	<?php get_template_part( 'template-parts/base/list-definitions' ); ?>
+</div>

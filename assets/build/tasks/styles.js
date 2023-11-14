@@ -1,14 +1,14 @@
 var gulp = require('gulp')
 var rename = require('gulp-rename')
-var sass = require('gulp-sass')
+// var sass = require('gulp-sass')
 var postcss = require('gulp-postcss')
 var atImport = require('postcss-import')
 var fontPath = require('postcss-fontpath')
 var tailwindcss = require('tailwindcss')
 // var easingGradients = require('postcss-easing-gradients')
-var inlineSvg = require('postcss-inline-svg')
+// var inlineSvg = require('postcss-inline-svg')
 var presetEnv = require('postcss-preset-env')
-var purgecss = require('@fullhuman/postcss-purgecss')
+// var purgecss = require('@fullhuman/postcss-purgecss')
 var purgecssWordpress = require('purgecss-with-wordpress')
 var autoprefixer = require('autoprefixer')
 var perfectionist = require('perfectionist')
@@ -101,19 +101,19 @@ function watchStyles () {
   ], styles)
 }
 
-function stylesSass () {
-  return gulp.src('assets/css/theme.scss')
-    .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest('assets/css/'))
-}
+// function stylesSass () {
+//   return gulp.src('assets/css/theme.scss')
+//     .pipe(sass().on('error', sass.logError))
+//     .pipe(gulp.dest('assets/css/'))
+// }
 
-function watchStylesSass () {
-  return gulp.watch([
-    'assets/css/**/*.scss',
-  ], stylesSass)
-}
+// function watchStylesSass () {
+//   return gulp.watch([
+//     'assets/css/**/*.scss',
+//   ], stylesSass)
+// }
 
 exports.default = styles
 exports.watch = watchStyles
-exports.stylesSass = stylesSass
-exports.watchStylesSass = watchStylesSass
+// exports.stylesSass = stylesSass
+// exports.watchStylesSass = watchStylesSass

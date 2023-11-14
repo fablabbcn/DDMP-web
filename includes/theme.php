@@ -1,17 +1,18 @@
 <?php
 
 // Redirect single posts to the archive page.
-add_action(
-	'template_redirect',
-	function () {
-		if ( is_singular( 'resources' ) ) {
-			global $post;
-			$redirect_link = get_post_type_archive_link( 'resources' ) . '#post-' . get_the_ID();
-			wp_redirect( $redirect_link, 302 );
-			exit;
-		}
-	}
-);
+// add_action(
+// 	'template_redirect',
+// 	function () {
+// 		if ( is_singular( 'resources' ) ) {
+// 			global $post;
+// 			$redirect_link = get_post_type_archive_link( 'resources' ) . '#post-' . get_the_ID();
+// 			wp_redirect( $redirect_link, 302 );
+// 			exit;
+// 		}
+// 	}
+// );
+
 
 // FacetWP: Remove front-end styles
 add_filter(
@@ -25,21 +26,35 @@ add_filter(
 	}
 );
 
-// FacetWP: Custom Pagination.
-// add_filter(
-// 	'facetwp_pager_html',
-// 	function ( $output, $params ) {
-// 		return Timber::compile(
-// 			'partials/common/pagination.twig',
-// 			array(
-// 				'post'  => new Timber\Post(),
-// 				'facet' => $params,
-// 			)
-// 		);
-// 	},
-// 	10,
-// 	2
-// );
+// FacetWP: Add icons to taxonomy buttons
+add_filter( 'facetwp_facet_display_value', function( $label, $params ) {
+	if ( ! in_array( $params['facet']['type'], array( 'radio', 'checkboxes' ) ) ) return $label;
+
+	$source = $params['facet']['source'];
+
+	if ( str_contains( $source, 'tax/' ) ) {
+		$taxonomy = str_replace( 'tax/', '', $source );
+
+		$icon = get_field( 'icon', $taxonomy . '_' . $params['row']['term_id'] );
+		$color = get_field( 'color', $taxonomy . '_' . $params['row']['term_id'] ) ?: 'inherit';
+		$icon_url = wp_get_attachment_image_url( $icon, 'icon-thumbnails', false );
+
+		$label = $icon
+			? "<div class=\"ddp-button\" style=\"--theme: $color; --icon-url: url('$icon_url');\"><span class=\"-my-2 ddp-button-icon\"></span><span>$label</span></div>"
+			: "<div class=\"ddp-button\" style=\"--theme: $color;\"><span>$label</span></div>";
+	} else {
+		$label = "<div class=\"ddp-button\"><span>$label</span></div>";
+	}
+
+	return $label;
+}, 10, 2 );
+
+// FacetWP: Always show Prev+Next buttons
+add_filter( 'facetwp_facet_types', function( $types ) {
+	include( dirname( __FILE__ ) . '/facetwp/class-pager-ddp.php' );
+	$types['pager'] = new FacetWP_Facet_Pager_DDP();
+	return $types;
+});
 
 
 add_filter(

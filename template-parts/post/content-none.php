@@ -6,8 +6,8 @@
 ?>
 
 
-<div class="container">
-	<div class="page-content text-center">
+<div class="">
+	<div class="">
 		<h1><?php esc_html_e( 'Nothing was found', 'ddmp' ); ?></h1>
 	</div>
 </div>

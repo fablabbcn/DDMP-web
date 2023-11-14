@@ -7,7 +7,9 @@ function load_the_theme_settings() {
 
 	if ( function_exists( 'add_theme_support' ) ) {
 		add_theme_support( 'post-thumbnails' );
+
 		add_image_size( 'full-screen-thumbnails', 2000, null, true );
+		add_image_size( 'slider', 1080, 810, true );
 		add_image_size( 'container-thumbnails', 1090, null, false );
 		add_image_size( 'post-list-thumbnails', 768, null, true );
 		add_image_size( 'post-list-thumbnails-square', 768, 768, true );

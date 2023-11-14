@@ -3,33 +3,27 @@
 // Enqueue style and js
 function the_theme_scripts() {
 	$theme_version = wp_get_theme()['Version'];
+	$google_maps_api_key = get_field( 'google_maps_api_key', 'options' );
 
-	wp_enqueue_style( 'fonts-Oswald', 'https://fonts.googleapis.com/css?family=Oswald:300,500,700' );
-	wp_enqueue_style( 'fonts-Poppins', 'https://fonts.googleapis.com/css?family=Poppins:400,600' );
-	wp_enqueue_style( 'tachyons', 'https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css' );
-
-	wp_enqueue_style( 'theme', get_stylesheet_directory_uri() . '/assets/css/theme.css', null, $theme_version );
-	wp_enqueue_style( 'grids', get_stylesheet_directory_uri() . '/assets/css/grids.css', null, $theme_version );
-	wp_enqueue_style( 'accordion', get_stylesheet_directory_uri() . '/assets/css/accordion.css', null, $theme_version );
+	wp_enqueue_style( 'tailwindcss', get_stylesheet_directory_uri() . '/assets/css/tailwind.prod.css', null, $theme_version );
 	wp_enqueue_style( 'style', get_stylesheet_directory_uri() . '/style.css', null, $theme_version );
+	// wp_enqueue_style( 'main', get_stylesheet_directory_uri() . '/assets/css/main.css', null, $theme_version );
 
-	wp_enqueue_style( 'main', get_stylesheet_directory_uri() . '/assets/css/main.css', null, $theme_version );
-
-	wp_enqueue_script( 'bodyScrollLock-min', get_stylesheet_directory_uri() . '/assets/js/vendor/bodyScrollLock.min.js', array(), false, true );
-	wp_enqueue_script( 'bootstrap-min', get_stylesheet_directory_uri() . '/assets/js/vendor/bootstrap.min.js', array( 'jquery' ), false, true );
-	wp_enqueue_script( 'accordion', get_stylesheet_directory_uri() . '/assets/js/vendor/accordion.js', array( 'jquery' ), false, true );
-	wp_enqueue_script( 'slick-min', get_stylesheet_directory_uri() . '/assets/js/vendor/slick.min.js', array( 'jquery' ), false, true );
+	// wp_enqueue_script( 'bodyScrollLock-min', get_stylesheet_directory_uri() . '/assets/js/vendor/bodyScrollLock.min.js', array(), false, true );
 	wp_enqueue_script( 'ajaxchimp-min', get_stylesheet_directory_uri() . '/assets/js/vendor/jquery.ajaxchimp.min.js', array( 'jquery' ), 'exotic', true );
-	// wp_enqueue_script( 'placeholders', get_stylesheet_directory_uri() . '/assets/js/vendor/placeholders.js', array( 'jquery' ), false, true );
-	wp_enqueue_script( 'scripts', get_stylesheet_directory_uri() . '/assets/js/scripts.js', array( 'jquery' ), $theme_version, true );
 
-	$js_names = array(
-		'jquery',
-		'bootstrap-min',
-		'slick-min',
-		// 'placeholders',
-		'scripts',
-	);
+	// TODO: Replace CDN links for local ones
+	wp_enqueue_style( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@9.0.5/swiper-bundle.min.css', null, '9.0.5' );
+	wp_enqueue_script( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@9.0.5/swiper-bundle.min.js', null, '9.0.5', true );
+
+	wp_enqueue_script( 'alpine-focus', 'https://cdn.jsdelivr.net/npm/@alpinejs/focus@3.11.1/dist/cdn.min.js', null, '3.11.1', true );
+	wp_enqueue_script( 'alpine', 'https://cdn.jsdelivr.net/npm/alpinejs@3.11.1/dist/cdn.min.js', null, '3.11.1', true );
+	wp_enqueue_script( 'scripts', get_stylesheet_directory_uri() . '/assets/js/scripts.js', array( 'jquery', 'swiper' ), $theme_version, true );
+
+	wp_enqueue_script( 'google-maps', "https://maps.googleapis.com/maps/api/js?key=$google_maps_api_key&callback=Function.prototype", null, false, true );
+	wp_enqueue_script( 'acf-maps', get_stylesheet_directory_uri() . '/assets/js/acf-maps.js', array( 'jquery', 'google-maps' ), $theme_version, true );
+
+	$js_names = array( 'jquery', 'scripts' );
 
 	$localize_arr = array(
 		'homeUrl'  => home_url(),

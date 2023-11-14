@@ -1,0 +1,358 @@
+@font-face { font-family: Aileron; font-weight: 100; font-style: normal; src: url('../fonts/aileron/Aileron-UltraLight.woff2') format('woff2'); }
+@font-face { font-family: Aileron; font-weight: 200; font-style: normal; src: url('../fonts/aileron/Aileron-Thin.woff2') format('woff2'); }
+@font-face { font-family: Aileron; font-weight: 300; font-style: normal; src: url('../fonts/aileron/Aileron-Light.woff2') format('woff2'); }
+@font-face { font-family: Aileron; font-weight: 400; font-style: normal; src: url('../fonts/aileron/Aileron-Regular.woff2') format('woff2'); }
+@font-face { font-family: Aileron; font-weight: 600; font-style: normal; src: url('../fonts/aileron/Aileron-SemiBold.woff2') format('woff2'); }
+@font-face { font-family: Aileron; font-weight: 700; font-style: normal; src: url('../fonts/aileron/Aileron-Bold.woff2') format('woff2'); }
+@font-face { font-family: Aileron; font-weight: 800; font-style: normal; src: url('../fonts/aileron/Aileron-Heavy.woff2') format('woff2'); }
+@font-face { font-family: Aileron; font-weight: 900; font-style: normal; src: url('../fonts/aileron/Aileron-Black.woff2') format('woff2'); }
+
+@font-face { font-family: Aileron; font-weight: 100; font-style: italic; src: url('../fonts/aileron/Aileron-UltraLightItalic.woff2') format('woff2'); }
+@font-face { font-family: Aileron; font-weight: 200; font-style: italic; src: url('../fonts/aileron/Aileron-ThinItalic.woff2') format('woff2'); }
+@font-face { font-family: Aileron; font-weight: 300; font-style: italic; src: url('../fonts/aileron/Aileron-LightItalic.woff2') format('woff2'); }
+@font-face { font-family: Aileron; font-weight: 400; font-style: italic; src: url('../fonts/aileron/Aileron-Italic.woff2') format('woff2'); }
+@font-face { font-family: Aileron; font-weight: 600; font-style: italic; src: url('../fonts/aileron/Aileron-SemiBoldItalic.woff2') format('woff2'); }
+@font-face { font-family: Aileron; font-weight: 700; font-style: italic; src: url('../fonts/aileron/Aileron-BoldItalic.woff2') format('woff2'); }
+@font-face { font-family: Aileron; font-weight: 800; font-style: italic; src: url('../fonts/aileron/Aileron-HeavyItalic.woff2') format('woff2'); }
+@font-face { font-family: Aileron; font-weight: 900; font-style: italic; src: url('../fonts/aileron/Aileron-BlackItalic.woff2') format('woff2'); }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { @apply text-sm md:text-base lg:text-lg scroll-smooth antialiased; }
+  body { @apply flex flex-col min-h-screen overflow-x-hidden overflow-y-auto; }
+
+  /* *:focus-visible { @apply ring-2 ring-black ring-offset-4 ring-offset-gray rounded outline-none; } */
+
+  small { @apply text-unset; }
+  address { @apply not-italic; }
+  svg { @apply fill-current; }
+
+  summary {
+    @apply cursor-pointer;
+    &::-webkit-details-marker { @apply hidden; }
+  }
+
+  /* input[type='search'] {
+    &::-webkit-search-cancel-button {
+      @apply appearance-none box-border w-4 h-4 p-1;
+      @apply bg-black-light bg-image-cross bg-origin-content bg-no-repeat rounded-full;
+    }
+  } */
+
+  button {
+    font: inherit;
+    text-align: inherit;
+    text-transform: inherit;
+  }
+
+  a, button {
+    text-decoration: underline currentcolor solid;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0;
+    text-underline-position: under;
+    @apply transition-all;
+
+    &:hover, &:focus {
+      text-underline-offset: 2px;
+    }
+  }
+}
+
+@layer components {
+  .container { @apply max-w-none xl:max-w-screen-2xl mx-auto !important; }
+
+  .bleed {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+  }
+
+  .grid-layout {
+    @apply grid;
+    &:not([class*='gap-']) { @apply gap-4; }
+    &:not([class*='grid-cols-']) { @apply grid-cols-5 lg:grid-cols-7; }
+  }
+
+  .ddp-button {
+    @apply inline-flex items-center justify-center gap-2;
+    @apply w-auto min-h-[2rem] px-4 py-2 border border-current rounded-full;
+    @apply uppercase lg:normal-case bg-transparent text-center text-sm leading-none;
+    @apply no-underline cursor-pointer transition-colors duration-200 ease-in-out;
+    @apply relative overflow-hidden;
+    @apply before:absolute before:inset-0 before:w-full before:h-full;
+    @apply before:bg-current before:opacity-0 hover:before:opacity-10 focus:before:opacity-10;
+    @apply before:transition-opacity before:duration-200 before:ease-in-out;
+  }
+
+  .ddp-button-icon {
+    mask-size: contain;
+    mask-image: var(--icon-url);
+    @apply w-4 h-4 bg-current;
+  }
+
+  .rich-text {
+    @apply grid gap-4;
+
+    & :is(h1, h2, h3, h4, h5, h6, b, strong) { @apply font-semibold; }
+    & :is(h1, h2, h3, h4, h5, h6, b, strong):not([class*="mt-"]):not(:first-child) { @apply mt-[1em]; }
+
+    & h1 { @apply text-4xl; }
+    & h2 { @apply text-3xl; }
+    & h3 { @apply text-2xl; }
+    & h4 { @apply text-xl; }
+    & h5 { @apply text-lg; }
+    & h6 { @apply text-base; }
+
+    & ul { @apply pl-4 list-disc; }
+    & ol { @apply pl-4 list-decimal; }
+    & li { @apply pl-2; }
+    & li + li { @apply mt-[0.5em]; }
+
+    & img { @apply h-auto max-w-full object-cover; }
+    & iframe { @apply aspect-[16/9] w-full h-auto max-w-full object-cover rounded-2xl overflow-hidden; }
+    & pre { @apply h-auto max-w-full text-sm bg-black/10 overflow-auto; }
+
+    & .rich-text {
+      @apply gap-2;
+    }
+  }
+}
+
+@layer utilities {
+  .bg-gradient-tl-transparent { background-image: linear-gradient(135deg, theme('colors.transparent'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+  .bg-gradient-tr-transparent { background-image: linear-gradient(225deg, theme('colors.transparent'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+  .bg-gradient-br-transparent { background-image: linear-gradient(315deg, theme('colors.transparent'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+  .bg-gradient-bl-transparent { background-image: linear-gradient(045deg, theme('colors.transparent'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+
+  .bg-gradient-tl-black { background-image: linear-gradient(135deg, theme('colors.black'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+  .bg-gradient-tr-black { background-image: linear-gradient(225deg, theme('colors.black'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+  .bg-gradient-br-black { background-image: linear-gradient(315deg, theme('colors.black'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+  .bg-gradient-bl-black { background-image: linear-gradient(045deg, theme('colors.black'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+
+  .bg-gradient-tl-gray { background-image: linear-gradient(135deg, theme('colors.gray'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+  .bg-gradient-tr-gray { background-image: linear-gradient(225deg, theme('colors.gray'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+  .bg-gradient-br-gray { background-image: linear-gradient(315deg, theme('colors.gray'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+  .bg-gradient-bl-gray { background-image: linear-gradient(045deg, theme('colors.gray'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+
+  .bg-gradient-tl-white { background-image: linear-gradient(135deg, theme('colors.white'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+  .bg-gradient-tr-white { background-image: linear-gradient(225deg, theme('colors.white'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+  .bg-gradient-br-white { background-image: linear-gradient(315deg, theme('colors.white'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+  .bg-gradient-bl-white { background-image: linear-gradient(045deg, theme('colors.white'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+
+  .bg-gradient-tl-red { background-image: linear-gradient(135deg, theme('colors.red'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+  .bg-gradient-tr-red { background-image: linear-gradient(225deg, theme('colors.red'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+  .bg-gradient-br-red { background-image: linear-gradient(315deg, theme('colors.red'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+  .bg-gradient-bl-red { background-image: linear-gradient(045deg, theme('colors.red'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+
+  .bg-gradient-tl-yellow { background-image: linear-gradient(135deg, theme('colors.yellow'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+  .bg-gradient-tr-yellow { background-image: linear-gradient(225deg, theme('colors.yellow'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+  .bg-gradient-br-yellow { background-image: linear-gradient(315deg, theme('colors.yellow'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+  .bg-gradient-bl-yellow { background-image: linear-gradient(045deg, theme('colors.yellow'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+
+  .bg-gradient-tl-green { background-image: linear-gradient(135deg, theme('colors.green'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+  .bg-gradient-tr-green { background-image: linear-gradient(225deg, theme('colors.green'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+  .bg-gradient-br-green { background-image: linear-gradient(315deg, theme('colors.green'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+  .bg-gradient-bl-green { background-image: linear-gradient(045deg, theme('colors.green'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+
+  .bg-gradient-tl-blue { background-image: linear-gradient(135deg, theme('colors.blue'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+  .bg-gradient-tr-blue { background-image: linear-gradient(225deg, theme('colors.blue'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+  .bg-gradient-br-blue { background-image: linear-gradient(315deg, theme('colors.blue'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+  .bg-gradient-bl-blue { background-image: linear-gradient(045deg, theme('colors.blue'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+
+  .bg-gradient-tl-indigo { background-image: linear-gradient(135deg, theme('colors.indigo'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+  .bg-gradient-tr-indigo { background-image: linear-gradient(225deg, theme('colors.indigo'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+  .bg-gradient-br-indigo { background-image: linear-gradient(315deg, theme('colors.indigo'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+  .bg-gradient-bl-indigo { background-image: linear-gradient(045deg, theme('colors.indigo'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+
+  .bg-gradient-tl-purple { background-image: linear-gradient(135deg, theme('colors.purple'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+  .bg-gradient-tr-purple { background-image: linear-gradient(225deg, theme('colors.purple'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+  .bg-gradient-br-purple { background-image: linear-gradient(315deg, theme('colors.purple'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+  .bg-gradient-bl-purple { background-image: linear-gradient(045deg, theme('colors.purple'), cubic-bezier(0, 0.75, 0.25, 1), transparent); }
+}
+
+body.page main > article > [class*="bg-"] + [class*="bg-"] {
+  @apply -mt-12 lg:-mt-24;
+}
+
+body.single-post main > article {
+  & > :is(header, section, footer) > [data-layout] > .grid-layout {
+    @apply lg:grid-cols-14;
+    & .bleed > .grid-layout { @apply lg:grid-cols-14; }
+    & [class*="lg:col-start-3"] { @apply lg:col-start-4 lg:col-end-12; }
+
+  }
+}
+
+.facetwp-facet {
+  @apply flex flex-wrap justify-center items-center gap-2;
+  & .facetwp-counter { @apply sr-only; }
+
+  & .disabled {
+    @apply opacity-50 cursor-not-allowed !important;
+    & * { @apply cursor-not-allowed !important; }
+  }
+
+  & .facetwp-checkbox, & .facetwp-radio {
+    &[data-value=""] { @apply ddp-button; }
+    @apply rounded-full overflow-hidden;
+    &:is(.checked) div { @apply text-gray bg-[--theme,theme(colors.black)] border-[--theme,theme(colors.black)] !important; }
+  }
+
+  & .facetwp-pager {
+    @apply flex items-center justify-center gap-2;
+
+    & .facetwp-page {
+      @apply ddp-button;
+      &:is(.checked) { @apply text-white bg-black !important; }
+      &.active:not(.prev, .next) { @apply font-bold; }
+      &:not(.prev, .next) { @apply hidden; }
+    }
+  }
+}
+
+.wpulike.wpulike-heart {
+  @apply relative flex p-0 leading-none border-none cursor-pointer rounded-full overflow-hidden;
+
+  & .wp_ulike_general_class {
+    @apply flex gap-1 p-0 bg-transparent shadow-none;
+  }
+
+  & .count-box {
+    font: unset;
+    @apply p-0 text-current;
+  }
+
+  & .wp_ulike_btn {
+    @apply static;
+  }
+
+  & .wp_ulike_put_image {
+    @apply w-[1em] h-[1em] p-0 !important;
+
+    &::after { @apply static w-[inherit] h-[inherit] transform-none; }
+
+    &::before {
+      content: '';
+      @apply absolute inset-0 w-full h-full;
+    }
+  }
+}
+
+.af-form.acf-form[id*="form_"], #acf-form {
+  & .af-page-wrap {
+    @apply !m-0 -mx-8 lg:-mx-12;
+
+    & .af-page-button {
+      @apply text-black bg-black/5 border-none;
+
+      &:not(:first-child) { @apply border-l border-r-0 border-solid border-[rgb(235,235,235)]; }
+
+      &::before { @apply content-none; }
+      &::after { @apply content-none; }
+
+      &.enabled {
+        @apply bg-white;
+      }
+
+      & .index {
+        @apply text-black bg-gray/50;
+      }
+    }
+  }
+
+  & .acf-field {
+    @apply px-0 py-8 border-[rgb(235,235,235)];
+
+    & .acf-label label { @apply font-semibold; }
+    & .char-count { @apply block mt-2 text-xs font-semibold text-right not-italic; }
+
+    & :is([type="checkbox"], [type="radio"]) {
+      @apply text-indigo ring-indigo;
+    }
+
+    & :is(input:not([type="checkbox"], [type="radio"]), textarea, select) {
+      font: inherit !important;
+      @apply ddp-button flex w-full text-left rounded-none;
+    }
+
+    & .acf-table {
+      @apply bg-transparent border-[rgb(235,235,235)] border-collapse;
+
+      & :is(th, td) {
+        @apply p-2 text-inherit bg-transparent border-[rgb(235,235,235)];
+      }
+
+      & .acf-row {
+        &:nth-of-type(even) { @apply bg-gray/25; }
+        & .acf-row-number { @apply text-inherit; }
+      }
+    }
+
+    & .acf-actions > .acf-repeater-add-row {
+      @apply min-h-0 px-3 py-2 text-xs leading-none;
+    }
+
+    /* & .acf-repeater .acf-row:is(:hover, .-hover) > .acf-row-handle .acf-icon {
+      @apply flex justify-center items-center;
+    } */
+
+    &.acf-field-group {
+      & .acf-fields { @apply border-none; }
+      & .acf-field {
+        @apply p-2 border-none;
+
+        box-shadow:
+          1px 0 0 0 rgb(235 235 235),
+          0 1px 0 0 rgb(235 235 235),
+          1px 1px 0 0 rgb(235 235 235),
+          1px 0 0 0 rgb(235 235 235) inset,
+          0 1px 0 0 rgb(235 235 235) inset;
+      }
+    }
+
+    & .acf-input-wrap {
+      & i.acf-icon {
+        @apply top-px left-px bottom-px flex justify-end items-center w-4 h-full text-black/50 border-none opacity-100;
+        &::before { @apply m-0; }
+      }
+    }
+  }
+
+  & :is(.af-submit, .acf-form-submit) { @apply flex justify-end gap-2 p-0; }
+
+  & :is(.acf-button, .af-previous-button, .af-next-button, .af-close-button, .acf-gallery-sort) {
+    @apply ddp-button m-0;
+
+    /* &:matches(:hover, :focus) { @apply text-black bg-white-70 !important; }
+    &:matches([disabled]) { @apply opacity-30 cursor-not-allowed; }
+    &:matches([style="display: none;"]) { @apply hidden !important; } */
+  }
+
+  & .acf-notice {
+    @apply m-0 mb-2 text-indigo bg-indigo/10 border-indigo;
+    &.-error { @apply text-red bg-red/10 border-red; }
+
+    & .acf-notice-dismiss { @apply flex justify-center items-center !bg-white; }
+  }
+
+  & .acf-spinner {
+    @apply invisible order-first;
+
+    &::before {
+      content: '';
+      @apply absolute inset-0 w-full h-full visible bg-white/50;
+    }
+
+    &::after {
+      all: inherit;
+      content: '';
+      @apply z-50 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 visible;
+    }
+  }
+}
+
+[data-ajaxchimp] {
+  &::after { content: attr(data-content); }
+}
